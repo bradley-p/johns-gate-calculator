@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gate Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body class="bg-light">
+    <div class="container">
+
+        <nav class="navbar navbar-light bg-light">
+            <div class="nav-item">
+                <img class="navbar-brand" src="https://arrow-fence.com/wp-content/uploads/2019/03/arrow-fence.png" style="height: 100px; width: 150px;">
+            </div>
+            <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll">
+                <li class="nav-item">
+                    <a href="#" class="nav-link"><h3>John's Gate Calculator</h3></a>
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+
+    <div class="container d-flex justify-content-center align-items-center pt-5">
+        <div class="row g-3">
+            <input id="opening" class="form-control" type="number" name="opening" placeholder="Enter Opening">
+            <input id="bias" class="form-control" type="number" name="opening" placeholder="Enter Bias">
+            <button class="btn btn-primary" id="calculate">Calculate</button>
+            <label for="angle">Angle of Gate (in degrees)</label>
+            <input id="angle" class="form-control" type="number" name="angle" disabled>
+            <label for="widthDiff">Width Difference caused by bias (in inches)</label>
+            <input id="widthDiff" name="widthDiff" class="form-control" type="number" name="widthDiff" disabled>
+        </div>
+    </div>
+
+    <script defer>
+        console.log("hello world");
+        const getDiff = (opening, bias) =>{
+            console.log("getDiff")
+            const thetaR = Math.atan(bias/opening);
+            const thetaD = thetaR * (180/Math.PI);
+            const widthDiff = Math.abs(opening - opening/Math.cos(thetaR));
+            return {"angle": thetaD, "widthDiff": widthDiff};
+        };
+
+        document.getElementById("calculate").addEventListener("click", (e)=>{
+            e.preventDefault();
+            const opening = parseFloat( document.getElementById("opening").value);
+            const bias = parseFloat( document.getElementById("bias").value);
+            const {angle, widthDiff} = getDiff(opening, bias);
+            console.log(angle, widthDiff);
+            document.getElementById("angle").value = angle;
+            document.getElementById("widthDiff").value = widthDiff;
+
+        })
+
+    </script>
+    
+</body>
+</html>
